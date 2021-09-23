@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/ChristinaFomenko/users_app/app"
 	"github.com/ChristinaFomenko/users_app/app/database"
+	_ "github.com/lib/pq"
 	"log"
 	"net/http"
 	"os"
