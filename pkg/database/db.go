@@ -1,6 +1,7 @@
 package database
 
 import (
+	"github.com/ChristinaFomenko/users_app/pkg/model"
 	"github.com/jmoiron/sqlx"
 	"log"
 )
@@ -8,6 +9,8 @@ import (
 type UserDB interface {
 	Open() error
 	Close() error
+	CreateUser(u *model.User) error
+	GetUser() ([]*model.User, error)
 }
 
 type DB struct {

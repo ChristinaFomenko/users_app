@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/ChristinaFomenko/users_app/app"
-	"github.com/ChristinaFomenko/users_app/app/database"
+	"github.com/ChristinaFomenko/users_app/pkg"
+	"github.com/ChristinaFomenko/users_app/pkg/database"
 	_ "github.com/lib/pq"
 	"log"
 	"net/http"
@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	app := app.New()
+	app := pkg.New()
 	app.DB = &database.DB{}
 	err := app.DB.Open()
 	check(err)

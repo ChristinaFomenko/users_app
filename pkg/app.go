@@ -1,7 +1,7 @@
-package app
+package pkg
 
 import (
-	"github.com/ChristinaFomenko/users_app/app/database"
+	"github.com/ChristinaFomenko/users_app/pkg/database"
 	"github.com/gorilla/mux"
 )
 
@@ -21,4 +21,5 @@ func New() *App {
 
 func (a *App) initRoutes() {
 	a.Router.HandleFunc("/", a.IndexHandler()).Methods("GET")
+	a.Router.HandleFunc("/user", a.CreateUserHandler()).Methods("POST")
 }
