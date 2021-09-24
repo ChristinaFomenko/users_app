@@ -47,3 +47,21 @@ func (a *App) CreateUserHandler() http.HandlerFunc {
 		sendResponse(w, r, resp, http.StatusOK)
 	}
 }
+
+func (a *App) GetUserHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		user, err := a.DB.GetUser()
+		if err != nil {
+			log.Printf("Can't get users, err=%v \n", err)
+			sendResponse(w, r, nil, http.StatusInternalServerError)
+			return
+		}
+
+		var resp = make([]model.JsonUser, len(user))
+		for i, users := range user {
+			resp[i] = mapUserJSON(users)
+		}
+
+		sendResponse(w, r, resp, http.StatusOK)
+	}
+}

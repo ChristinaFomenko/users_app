@@ -22,4 +22,5 @@ func New() *App {
 func (a *App) initRoutes() {
 	a.Router.HandleFunc("/", a.IndexHandler()).Methods("GET")
 	a.Router.HandleFunc("/user", a.CreateUserHandler()).Methods("POST")
+	a.Router.HandleFunc("/user", a.GetUserHandler()).Methods("GET")
 }
