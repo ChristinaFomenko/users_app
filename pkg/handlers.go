@@ -35,7 +35,11 @@ func (a *App) CreateUserHandler() http.HandlerFunc {
 			IncomePerYear: req.IncomePerYear,
 		}
 
-		if u.FirstName == "" {
+		err = a.DB.CreateUser(u)
+		if err != nil {
+			log.Printf("Can't save user to db, err%v\n", err)
+			sendResponse(w, r, nil, http.StatusInternalServerError)
+		} else if u.FirstName == "" {
 			log.Println("name", "The name is required!")
 		}
 		// check the name field is between 1 to 120 chars
@@ -47,13 +51,6 @@ func (a *App) CreateUserHandler() http.HandlerFunc {
 		}
 		if len(u.LastName) == 0 || len(u.LastName) > 40 {
 			log.Println("last name", "The name field must be between 1-40 chars!")
-		}
-
-		err = a.DB.CreateUser(u)
-		if err != nil {
-			log.Printf("Can't save user to db, err%v\n", err)
-			sendResponse(w, r, nil, http.StatusInternalServerError)
-			return
 		}
 
 		resp := mapUserJSON(u)
