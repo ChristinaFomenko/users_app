@@ -10,6 +10,7 @@ type UserDB interface {
 	Open() error
 	Close() error
 	CreateUser(u *model.User) error
+	GetUsers() ([]*model.User, error)
 	GetUser() ([]*model.User, error)
 }
 

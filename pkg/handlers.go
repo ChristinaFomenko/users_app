@@ -1,10 +1,13 @@
 package pkg
 
 import (
+	//"errors"
 	"fmt"
 	"github.com/ChristinaFomenko/users_app/pkg/model"
+	"github.com/gorilla/mux"
 	"log"
 	"net/http"
+	//"github.com/go-playground/validator/v10"
 )
 
 func (a *App) IndexHandler() http.HandlerFunc {
@@ -39,28 +42,30 @@ func (a *App) CreateUserHandler() http.HandlerFunc {
 		if err != nil {
 			log.Printf("Can't save user to db, err%v\n", err)
 			sendResponse(w, r, nil, http.StatusInternalServerError)
-		} else if u.FirstName == "" {
-			log.Println("name", "The name is required!")
 		}
-		// check the name field is between 1 to 120 chars
-		if len(u.FirstName) == 0 || len(u.FirstName) > 40 {
-			log.Println("name", "The name field must be between 1-40 chars!")
-		}
-		if u.LastName == "" {
-			log.Println("last_name", "The last name field is required!")
-		}
-		if len(u.LastName) == 0 || len(u.LastName) > 40 {
-			log.Println("last name", "The name field must be between 1-40 chars!")
-		}
-
 		resp := mapUserJSON(u)
 		sendResponse(w, r, resp, http.StatusOK)
+
+		//} else if u.FirstName == "" {
+		//	log.Println("name", "The name is required!")
+		//}
+		//// check the name field is between 1 to 120 chars
+		//if len(u.FirstName) == 0 || len(u.FirstName) > 40 {
+		//	log.Println("name", "The name field must be between 1-40 chars!")
+		//}
+		//if u.LastName == "" {
+		//	log.Println("last_name", "The last name field is required!")
+		//}
+		//if len(u.LastName) == 0 || len(u.LastName) > 40 {
+		//	log.Println("last name", "The name field must be between 1-40 chars!")
+		//}
+
 	}
 }
 
-func (a *App) GetUserHandler() http.HandlerFunc {
+func (a *App) GetUsersHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		user, err := a.DB.GetUser()
+		user, err := a.DB.GetUsers()
 		if err != nil {
 			log.Printf("Can't get users, err=%v \n", err)
 			sendResponse(w, r, nil, http.StatusInternalServerError)
@@ -74,5 +79,19 @@ func (a *App) GetUserHandler() http.HandlerFunc {
 
 		sendResponse(w, r, resp, http.StatusOK)
 	}
+}
 
+func (a *App) GetUserByIDHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		vars := mux.Vars(r)
+		id := vars["id"]
+
+		userId, err := a.DB.GetUser()
+		if userId == nil {
+			log.Printf("Can't get users, err=%v \n", err)
+			sendResponse(w, r, id, http.StatusInternalServerError)
+			return
+		}
+
+	}
 }
