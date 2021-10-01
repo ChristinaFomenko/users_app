@@ -5,6 +5,7 @@ import (
 )
 
 func (d *DB) CreateUser(u *model.User) error {
+	//dateOfBirth := time.Time{}
 	res, err := d.db.Exec(insertUserSchema, u.FirstName, u.LastName, u.DateOfBirth, u.IncomePerYear)
 	if err != nil {
 		return err
@@ -13,7 +14,7 @@ func (d *DB) CreateUser(u *model.User) error {
 	return err
 }
 
-func (d *DB) GetUser() ([]*model.User, error) {
+func (d *DB) GetUsers() ([]*model.User, error) {
 	var user []*model.User
 	err := d.db.Select(&user, "SELECT * FROM users")
 	if err != nil {

@@ -3,7 +3,6 @@ package pkg
 import (
 	"github.com/ChristinaFomenko/users_app/pkg/database"
 	"github.com/gorilla/mux"
-	"net/http"
 )
 
 type App struct {
@@ -22,12 +21,12 @@ func New() *App {
 
 func (a *App) initRoutes() {
 	a.Router.HandleFunc("/", a.IndexHandler()).Methods("GET")
-	a.Router.HandleFunc("/user", a.CreateUserHandler()).Methods("POST")
-	a.Router.HandleFunc("/user", a.GetUsersHandler()).Methods("GET")
-	a.Router.HandleFunc("/user/{id}", a.GetUserByIDHandler().Methods("GET"))
+	a.Router.HandleFunc("/users", a.CreateUserHandler()).Methods("POST")
+	a.Router.HandleFunc("/users", a.GetUsersHandler()).Methods("GET")
+	//a.Router.HandleFunc("/user/{id}", a.GetUserByIDHandler().Methods("GET"))
 }
 
 // Get wraps the router for GET method
-func (a *App) Get(path string, f func(w http.ResponseWriter, r *http.Request)) {
-	a.Router.HandleFunc(path, f).Methods("GET")
-}
+//func (a *App) Get(path string, f func(w http.ResponseWriter, r *http.Request)) {
+//	a.Router.HandleFunc(path, f).Methods("GET")
+//}

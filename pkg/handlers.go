@@ -4,7 +4,6 @@ import (
 	//"errors"
 	"fmt"
 	"github.com/ChristinaFomenko/users_app/pkg/model"
-	"github.com/gorilla/mux"
 	"log"
 	"net/http"
 	//"github.com/go-playground/validator/v10"
@@ -20,6 +19,11 @@ func (a *App) CreateUserHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		req := model.UserRequest{}
 		err := parse(w, r, &req)
+		//timestamp :=
+		//const layout  = "2006-01-02"
+		//
+		//_, err = time.Parse(layout, timestamp)
+
 		//datestring := "07-20-2018"
 		//fmt.Println(datestring)
 		//date, err := time.Parse("01-02-2006", datestring)
@@ -65,33 +69,33 @@ func (a *App) CreateUserHandler() http.HandlerFunc {
 
 func (a *App) GetUsersHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		user, err := a.DB.GetUsers()
+		users, err := a.DB.GetUsers()
 		if err != nil {
 			log.Printf("Can't get users, err=%v \n", err)
 			sendResponse(w, r, nil, http.StatusInternalServerError)
 			return
 		}
 
-		var resp = make([]model.JsonUser, len(user))
-		for i, users := range user {
-			resp[i] = mapUserJSON(users)
+		var resp = make([]model.JsonUser, len(users))
+		for i, user := range users {
+			resp[i] = mapUserJSON(user)
 		}
 
 		sendResponse(w, r, resp, http.StatusOK)
 	}
 }
 
-func (a *App) GetUserByIDHandler() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		vars := mux.Vars(r)
-		id := vars["id"]
-
-		userId, err := a.DB.GetUser()
-		if userId == nil {
-			log.Printf("Can't get users, err=%v \n", err)
-			sendResponse(w, r, id, http.StatusInternalServerError)
-			return
-		}
-
-	}
-}
+//func (a *App) GetUserByIDHandler() http.HandlerFunc {
+//	return func(w http.ResponseWriter, r *http.Request) {
+//		vars := mux.Vars(r)
+//		id := vars["id"]
+//
+//		userId, err := a.DB.GetUser()
+//		if userId == nil {
+//			log.Printf("Can't get users, err=%v \n", err)
+//			sendResponse(w, r, id, http.StatusInternalServerError)
+//			return
+//		}
+//
+//	}
+//}
