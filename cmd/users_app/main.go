@@ -20,7 +20,7 @@ func main() {
 	http.HandleFunc("/", app.Router.ServeHTTP)
 
 	log.Println("App running..")
-	err = http.ListenAndServe(":8001", nil)
+	err = http.ListenAndServe(":8002", nil)
 	check(err)
 }
 

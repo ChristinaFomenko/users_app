@@ -15,14 +15,19 @@ func (d *DB) CreateUser(u *model.User) error {
 }
 
 func (d *DB) GetUsers() ([]*model.User, error) {
-	var user []*model.User
-	err := d.db.Select(&user, "SELECT * FROM users")
+	var users []*model.User
+	err := d.db.Select(&users, "SELECT * FROM users")
 	if err != nil {
-		return user, err
+		return users, err
 	}
 
-	return user, nil
+	return users, nil
 }
+
+//func (d *DB) GetUser() ([]*model.User, error) {
+//	var user []*model.User
+//	err := d.db.Select(&user, 'SELECT * from user WHERE id = $1', )
+//}
 
 //func (d *DB) FindByLastName(lastName string) (*model.User, error) {
 //	u := &model.User{}

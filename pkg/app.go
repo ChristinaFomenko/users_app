@@ -23,7 +23,7 @@ func (a *App) initRoutes() {
 	a.Router.HandleFunc("/", a.IndexHandler()).Methods("GET")
 	a.Router.HandleFunc("/users", a.CreateUserHandler()).Methods("POST")
 	a.Router.HandleFunc("/users", a.GetUsersHandler()).Methods("GET")
-	//a.Router.HandleFunc("/user/{id}", a.GetUserByIDHandler().Methods("GET"))
+	//a.Router.HandleFunc("/user/{id}", a.GetUserByIDHandler()).Methods("GET")
 }
 
 // Get wraps the router for GET method
