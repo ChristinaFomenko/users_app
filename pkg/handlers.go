@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/ChristinaFomenko/users_app/pkg/model"
 	"log"
+	"math"
 	"net/http"
 	//"github.com/go-playground/validator/v10"
 )
@@ -49,23 +50,21 @@ func (a *App) CreateUserHandler() http.HandlerFunc {
 			IncomePerYear: req.IncomePerYear,
 		}
 
-		if u.FirstName == "" {
-			log.Println("Имя - обязательно!")
+		if u.FirstName == "" || u.LastName == "" {
+			log.Println("Имя/фамилия - обязательны!")
 			log.Printf("Не могу сохранить пользователя в базу данных")
 			sendResponse(w, r, nil, http.StatusInternalServerError)
-		}
-		//check the name field is between 1 to 120 chars
-		if len(u.FirstName) == 0 || len(u.FirstName) > 40 {
-			log.Println("Имя должно быть в диапозоне от 1-40 символов!")
 			return
 		}
-		if u.LastName == "" {
-			log.Println("Фамилия - обязательна!")
+		if u.DateOfBirth < 1900 || u.DateOfBirth > 2021 {
+			log.Println("Диапазаон дат от 1900 до 2021")
 			log.Printf("Не могу сохранить пользователя в базу данных")
 			sendResponse(w, r, nil, http.StatusInternalServerError)
+			return
 		}
-		if len(u.LastName) == 0 || len(u.LastName) > 40 {
-			log.Println("Фамилия должна быть в диапозоне от 1-40 символов!")
+		if u.IncomePerYear == math.Trunc(u.IncomePerYear) {
+			log.Printf("Не могу сохранить пользователя в базу данных, число должно быть с плавающей точкой")
+			sendResponse(w, r, nil, http.StatusInternalServerError)
 			return
 		} else {
 			err = a.DB.CreateUser(u)
@@ -75,6 +74,14 @@ func (a *App) CreateUserHandler() http.HandlerFunc {
 		}
 	}
 }
+
+//if len(u.FirstName) == 0 || len(u.FirstName) > 40 {
+//	log.Println("Имя должно быть в диапозоне от 1-40 символов!")
+//	return
+//}
+//if len(u.LastName) == 0 || len(u.LastName) > 40 {
+//	log.Println("Фамилия должна быть в диапозоне от 1-40 символов!")
+//}
 
 func (a *App) GetUsersHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
