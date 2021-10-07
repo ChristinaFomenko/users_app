@@ -101,16 +101,18 @@ func (a *App) GetUsersHandler() http.HandlerFunc {
 	}
 }
 
-//func (a *App) GetUserByIDHandler() http.HandlerFunc {
-//	return func(w http.ResponseWriter, r *http.Request) {
-//		vars := mux.Vars(r)
-//		id := vars["id"]
-//
-//		userId, err := a.DB.GetUser()
-//		if userId == nil {
-//			log.Printf("Can't get users, err=%v \n", err)
-//			sendResponse(w, r, id, http.StatusInternalServerError)
-//		}
-//
-//	}
-//}
+func (a *App) GetUserByIDHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		userId, err := a.DB.GetUser()
+		if userId == nil {
+			log.Printf("Can't get user, err=%v \n", err)
+			sendResponse(w, r, nil, http.StatusInternalServerError)
+		}
+		var resp = make([]model.JsonUser, len(userId))
+		for i, user := range userId {
+			resp[i] = mapUserJSON(user)
+		}
+
+		sendResponse(w, r, resp, http.StatusOK)
+	}
+}

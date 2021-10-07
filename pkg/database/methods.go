@@ -24,10 +24,22 @@ func (d *DB) GetUsers() ([]*model.User, error) {
 	return users, nil
 }
 
-//func (d *DB) GetUser() ([]*model.User, error) {
-//	var user []*model.User
-//	err := d.db.Select(&user, 'SELECT * from user WHERE id = $1', )
-//}
+func (d *DB) GetUser() ([]*model.User, error) {
+	var names []*model.User
+	err := d.db.Select(&names, "SELECT first_name FROM users LIMIT 2")
+	if err != nil {
+		return nil, err
+	}
+	return names, err
+}
+
+//	var resp []*model.User
+//	err := d.db.QueryRow("SELECT * FROM user WHERE id = $1").Scan(&resp)
+//	if err != nil {
+//		return nil, err
+//	}
+//
+//	return resp, nil
 
 //func (d *DB) FindByLastName(lastName string) (*model.User, error) {
 //	u := &model.User{}
