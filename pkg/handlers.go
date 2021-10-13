@@ -72,6 +72,11 @@ func (a *App) CreateUserHandler() http.HandlerFunc {
 			sendResponse(w, r, resp, http.StatusOK)
 			log.Println("Пользователь успешно сохранен в бд!")
 		}
+		//res := model.UserResponse{}
+		//err = parse(w, r, &res)
+		//if err != nil {
+		//	return
+		//}
 	}
 }
 
@@ -116,3 +121,22 @@ func (a *App) GetUserByIDHandler() http.HandlerFunc {
 		sendResponse(w, r, resp, http.StatusOK)
 	}
 }
+
+//func (a *App) DeleteUsersHandler() http.HandlerFunc {
+//	return func(w http.ResponseWriter, r *http.Request) {
+//		users, err := a.DB.DeleteUsers()
+//		if err != nil {
+//			log.Printf("Can't delete users, err=%v \n", err)
+//			sendResponse(w, r, nil, http.StatusInternalServerError)
+//			return
+//		}
+//
+//		var resp = make([]model.JsonUser, len(users))
+//		for i, user := range users {
+//			resp[i] = mapUserJSON(user)
+//		}
+//
+//		sendResponse(w, r, resp, http.StatusOK)
+//
+//	}
+//}

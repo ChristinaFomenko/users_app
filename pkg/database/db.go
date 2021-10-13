@@ -12,6 +12,7 @@ type UserDB interface {
 	CreateUser(u *model.User) error
 	GetUsers() ([]*model.User, error)
 	GetUser() ([]*model.User, error)
+	//DeleteUsers() ([]*model.User, error)
 }
 
 type DB struct {

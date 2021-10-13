@@ -15,10 +15,14 @@ type JsonUser struct {
 	DateOfBirth   int64   `json:"date_of_birth,omitempty"`
 	IncomePerYear float64 `json:"income_per_year,omitempty"`
 }
-
 type UserRequest struct {
 	FirstName     string  `json:"first_name"`
 	LastName      string  `json:"last_name"`
 	DateOfBirth   int64   `json:"date_of_birth"`
 	IncomePerYear float64 `json:"income_per_year"`
 }
+
+//type UserResponse struct {
+//	Status string `json:"status"`
+//	Error  string `json:"error"`
+//}

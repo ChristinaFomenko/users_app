@@ -19,7 +19,7 @@ func main() {
 
 	http.HandleFunc("/", app.Router.ServeHTTP)
 
-	log.Println("App running..", "Server at localhost:8001")
+	log.Println("App running..", "Server at http://localhost:8001")
 	err = http.ListenAndServe(":8001", nil)
 	check(err)
 }

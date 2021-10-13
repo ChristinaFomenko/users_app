@@ -21,9 +21,10 @@ func New() *App {
 
 func (a *App) initRoutes() {
 	a.Router.HandleFunc("/", a.IndexHandler()).Methods("GET")
-	a.Router.HandleFunc("/users", a.CreateUserHandler()).Methods("POST")
+	a.Router.HandleFunc("/user/create", a.CreateUserHandler()).Methods("POST")
 	a.Router.HandleFunc("/users", a.GetUsersHandler()).Methods("GET")
 	a.Router.HandleFunc("/user", a.GetUserByIDHandler()).Methods("GET")
+	//a.Router.HandleFunc("/delete/users", a.DeleteUsersHandler()).Methods("DELETE")
 }
 
 // Get wraps the router for GET method

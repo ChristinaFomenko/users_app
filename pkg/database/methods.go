@@ -26,12 +26,23 @@ func (d *DB) GetUsers() ([]*model.User, error) {
 
 func (d *DB) GetUser() ([]*model.User, error) {
 	var names []*model.User
-	err := d.db.Select(&names, "SELECT first_name FROM users LIMIT 2")
+	err := d.db.Select(&names, "SELECT first_name, last_name, date_of_birth FROM users LIMIT 2")
+	//err := d.db.Select(&names, "SELECT first_name FROM users LIMIT 2")
 	if err != nil {
 		return nil, err
 	}
 	return names, err
 }
+
+//func (d *DB) DeleteUsers() ([]*model.User, error) {
+//	var users []*model.User
+//	err := d.db.Select(&users, "DELETE * FROM users")
+//	if err != nil {
+//		return users, err
+//	}
+//
+//	return users, nil
+//}
 
 //	var resp []*model.User
 //	err := d.db.QueryRow("SELECT * FROM user WHERE id = $1").Scan(&resp)
