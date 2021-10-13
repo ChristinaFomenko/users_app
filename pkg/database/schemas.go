@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS users
 )
 `
 
+//TODO: если выносишь отдельно переменные, значит это не должно где-то еще изменяться, значит константа
 var insertUserSchema = `
 INSERT INTO users(first_name, last_name, date_of_birth, income_per_year) VALUES($1, $2, $3, $4) RETURNING id
 `

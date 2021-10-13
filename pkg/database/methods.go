@@ -1,3 +1,4 @@
+//TODO: тут ты делаешь своё ORM. Возможно это стоит не выносить, а использовать в пакете handlers. Будет расширяться проект, будет перегружаться файл беспорядочными методами.
 package database
 
 import (
@@ -10,7 +11,7 @@ func (d *DB) CreateUser(u *model.User) error {
 	if err != nil {
 		return err
 	}
-	res.LastInsertId()
+	res.LastInsertId() //TODO: функция не void, у нее есть возвращаемые занчения, но они не обрабатываются никак
 	return err
 }
 

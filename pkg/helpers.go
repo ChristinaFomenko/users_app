@@ -7,6 +7,7 @@ import (
 	"net/http"
 )
 
+//TODO: у тебя не используется переменная w. Значит ее надо убрать.
 func parse(w http.ResponseWriter, r *http.Request, data interface{}) error {
 	return json.NewDecoder(r.Body).Decode(data)
 }
@@ -70,6 +71,7 @@ func sendResponse(w http.ResponseWriter, _ *http.Request, data interface{}, stat
 //	return true, nil
 //}
 
+//TODO: это конструктор. "конструкторы в go" погуглить надо. Ты возвращаешь не указатель, значит должно называться MakeUserJSON. Однако, если ты возвращаешь не указатель, то копируешь данные в новый указатель, что не оптимально.
 func mapUserJSON(u *model.User) model.JsonUser {
 	return model.JsonUser{
 		ID:            u.ID,
