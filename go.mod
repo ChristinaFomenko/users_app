@@ -1,7 +1,7 @@
 module github.com/ChristinaFomenko/users_app
 
 go 1.16
-
+//TODO: используй go mod tidy, он почистит ненужные зависимости, которых здесь очень много.
 require (
 	contrib.go.opencensus.io/exporter/stackdriver v0.6.0 // indirect
 	git.apache.org/thrift.git v0.0.0-20180807212849-6e67faa92827 // indirect
