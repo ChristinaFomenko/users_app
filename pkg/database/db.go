@@ -1,6 +1,7 @@
 package database
 
 import (
+	"fmt"
 	"github.com/ChristinaFomenko/users_app/pkg/model"
 	"github.com/jmoiron/sqlx"
 	"log"
@@ -14,7 +15,6 @@ type UserDB interface {
 	CreateUser(u *model.User) error
 	GetUsers() ([]*model.User, error)
 	GetUser() ([]*model.User, error)
-	//DeleteUsers() ([]*model.User, error)
 }
 
 type DB struct {
@@ -22,13 +22,13 @@ type DB struct {
 }
 
 func (d *DB) Open() error {
-	pg, err := sqlx.Open("postgres", pgConnStr)
+	pg, err := sqlx.Open("postgres", fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=disable", dbHost, dbPort, dbUsername, dbTable, dbPassword))
 	if err != nil {
 		return err
 	}
 	log.Println("Connected to database!")
 
-	pg.MustExec(createSchema)
+	pg.MustExec(CreateSchema)
 	d.db = pg
 
 	return nil

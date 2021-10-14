@@ -1,34 +1,27 @@
 package main
 
 import (
-	"github.com/ChristinaFomenko/users_app/pkg"
-	"github.com/ChristinaFomenko/users_app/pkg/database"
+	database "github.com/ChristinaFomenko/users_app/pkg/database"
+	"github.com/ChristinaFomenko/users_app/pkg/handler"
 	_ "github.com/lib/pq"
 	"log"
 	"net/http"
-	"os"
 )
 
 func main() {
-	app := pkg.New()
+
+	app := handler.New()
 	app.DB = &database.DB{}
 	err := app.DB.Open()
-	check(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	defer app.DB.Close()
 
 	http.HandleFunc("/", app.Router.ServeHTTP)
 
 	log.Println("App running..", "Server at http://localhost:8001")
-	//TODO: лучше просто разграничить область видимости err, т.к. эта ошибка никак не связана с базой данных.
-	err = http.ListenAndServe(":8001", nil)
-	check(err)
-}
-
-//TODO: есть Fatal, который делает тоже самое
-func check(e error) {
-	if e != nil {
-		log.Println(e)
-		os.Exit(1)
-	}
+	http.ListenAndServe(":8001", nil)
+	log.Fatal(err)
 }

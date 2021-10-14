@@ -1,6 +1,6 @@
 package database
 
-const createSchema = `
+const CreateSchema = `
 CREATE TABLE IF NOT EXISTS users
 ( 
 	id SERIAL PRIMARY KEY NOT NULL,
