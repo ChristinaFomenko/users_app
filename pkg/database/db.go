@@ -21,8 +21,40 @@ type DB struct {
 	db *sqlx.DB
 }
 
+func (d *DB) CreateUser(u *model.User) error {
+	res, err := d.db.Exec(InsertUserSchema, u.FirstName, u.LastName, u.DateOfBirth, u.IncomePerYear)
+	if err != nil {
+		return err
+	}
+	_, err = res.LastInsertId()
+	if err != nil {
+		return err
+	}
+	return err
+}
+
+func (d *DB) GetUsers() ([]*model.User, error) {
+	var users []*model.User
+	err := d.db.Select(&users, "SELECT * FROM users")
+	if err != nil {
+		return users, err
+	}
+
+	return users, nil
+}
+
+func (d *DB) GetUser() ([]*model.User, error) {
+	var names []*model.User
+	err := d.db.Select(&names, "SELECT first_name, last_name, date_of_birth FROM users LIMIT 2")
+	//err := d.db.Select(&names, "SELECT first_name FROM users LIMIT 2")
+	if err != nil {
+		return nil, err
+	}
+	return names, err
+}
+
 func (d *DB) Open() error {
-	pg, err := sqlx.Open("postgres", fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=disable", dbHost, dbPort, dbUsername, dbTable, dbPassword))
+	pg, err := sqlx.Open("postgres", fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=disable", DbHost, DbPort, DbUsername, DbTable, DbPassword))
 	if err != nil {
 		return err
 	}

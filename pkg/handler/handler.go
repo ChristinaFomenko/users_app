@@ -1,7 +1,5 @@
 package handler
 
-//TODO: обычно как раз в handlers описываются роуты, а уже в отдельных файлах их обработка.
-
 import (
 	"fmt"
 	"github.com/ChristinaFomenko/users_app/pkg/database"
@@ -34,5 +32,4 @@ func (a *App) initRoutes() {
 	a.Router.HandleFunc("/user/create", a.CreateUserHandler()).Methods("POST")
 	a.Router.HandleFunc("/users", a.GetUsersHandler()).Methods("GET")
 	a.Router.HandleFunc("/user", a.GetUserByFieldHandler()).Methods("GET")
-	//a.Router.HandleFunc("/delete/users", a.DeleteUsersHandler()).Methods("DELETE")
 }

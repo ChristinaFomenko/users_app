@@ -71,12 +71,11 @@ func (a *App) CreateUserHandler() http.HandlerFunc {
 	}
 }
 
-func (d *DB) CreateUser(u *model.User) error {
-	//dateOfBirth := time.Time{}
-	res, err := d.db.Exec(u.FirstName, u.LastName, u.DateOfBirth, u.IncomePerYear)
-	if err != nil {
-		return err
-	}
-	res.LastInsertId() //TODO: функция не void, у нее есть возвращаемые занчения, но они не обрабатываются никак
-	return err
-}
+//func (d *DB) CreateUser(u *model.User) error {
+//	res, err := d.db.Exec(u.FirstName, u.LastName, u.DateOfBirth, u.IncomePerYear)
+//	if err != nil {
+//		return err
+//	}
+//	res.LastInsertId() //TODO: функция не void, у нее есть возвращаемые занчения, но они не обрабатываются никак
+//	return err
+//}

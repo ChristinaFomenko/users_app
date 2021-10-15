@@ -8,7 +8,7 @@ import (
 
 func (a *App) GetUsersHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		users, err := GetUsers()
+		users, err := a.DB.GetUsers()
 		if err != nil {
 			log.Printf("Can't get users, err=%v \n", err)
 			sendResponse(w, r, nil, http.StatusInternalServerError)
@@ -22,14 +22,4 @@ func (a *App) GetUsersHandler() http.HandlerFunc {
 
 		sendResponse(w, r, resp, http.StatusOK)
 	}
-}
-
-func (d *DB) GetUsers() ([]*model.User, error) {
-	var users []*model.User
-	err := d.db.Select(&users, "SELECT * FROM users")
-	if err != nil {
-		return users, err
-	}
-
-	return users, nil
 }
