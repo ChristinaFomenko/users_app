@@ -3,7 +3,7 @@ package database
 const (
 	DbUsername = "usersappdb"
 	DbPassword = "usersappdb"
-	DbHost     = "db"
+	DbHost     = "localhost"
 	DbTable    = "usersappdb"
 	DbPort     = "5432"
 )
