@@ -2,7 +2,7 @@ package database
 
 const CreateSchema = `
 CREATE TABLE IF NOT EXISTS users
-( 
+(
 	id SERIAL PRIMARY KEY NOT NULL,
 	first_name TEXT NOT NULL,
 	last_name TEXT NOT NULL,
