@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"github.com/ChristinaFomenko/users_app/pkg/database"
 	"github.com/ChristinaFomenko/users_app/pkg/model"
 	"github.com/jmoiron/sqlx"
 	"log"
@@ -13,11 +14,11 @@ type DB struct {
 }
 
 type User struct {
-	ID            int64   `db:"id"`
-	FirstName     string  `db:"first_name"`
-	LastName      string  `db:"last_name"`
-	DateOfBirth   int64   `db:"date_of_birth"`
-	IncomePerYear float64 `db:"income_per_year"`
+	ID            int64   `repoUser:"id"`
+	FirstName     string  `repoUser:"first_name"`
+	LastName      string  `repoUser:"last_name"`
+	DateOfBirth   int64   `repoUser:"date_of_birth"`
+	IncomePerYear float64 `repoUser:"income_per_year"`
 }
 
 type JsonUser struct {
@@ -28,7 +29,7 @@ type JsonUser struct {
 	IncomePerYear float64 `json:"income_per_year,omitempty"`
 }
 
-func (a *App) CreateUserHandler() http.HandlerFunc {
+func CreateUserHandler(repoUser database.UserDB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		req := model.UserRequest{}
 		err := parse(r, &req)
@@ -53,7 +54,7 @@ func (a *App) CreateUserHandler() http.HandlerFunc {
 			return
 		}
 		if u.DateOfBirth < 1900 || u.DateOfBirth > 2021 {
-			log.Println("Диапазаон дат от 1900 до 2021")
+			log.Println("Диапазон дат от 1900 до 2021")
 			log.Printf("Не могу сохранить пользователя в базу данных")
 			sendResponse(w, r, nil, http.StatusInternalServerError)
 			return
@@ -63,7 +64,7 @@ func (a *App) CreateUserHandler() http.HandlerFunc {
 			sendResponse(w, r, nil, http.StatusInternalServerError)
 			return
 		} else {
-			err = a.DB.CreateUser(u)
+			err = repoUser.CreateUser(u)
 			resp := mapUserJSON(u)
 			sendResponse(w, r, resp, http.StatusOK)
 			log.Println("Пользователь успешно сохранен в бд!")
@@ -71,8 +72,8 @@ func (a *App) CreateUserHandler() http.HandlerFunc {
 	}
 }
 
-//func (d *DB) CreateUser(u *model.User) error {
-//	res, err := d.db.Exec(u.FirstName, u.LastName, u.DateOfBirth, u.IncomePerYear)
+//func (d *repoUser) CreateUser(u *model.User) error {
+//	res, err := d.repoUser.Exec(u.FirstName, u.LastName, u.DateOfBirth, u.IncomePerYear)
 //	if err != nil {
 //		return err
 //	}

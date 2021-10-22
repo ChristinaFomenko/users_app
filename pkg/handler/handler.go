@@ -2,34 +2,39 @@ package handler
 
 import (
 	"fmt"
+	"net/http"
+
 	"github.com/ChristinaFomenko/users_app/pkg/database"
 	"github.com/gorilla/mux"
-	"net/http"
+	"github.com/jmoiron/sqlx"
 )
 
 type App struct {
-	Router *mux.Router
-	DB     database.UserDB
+	Router   *mux.Router
+	db       *sqlx.DB
+	repoUser database.UserDB
 }
 
-func (a *App) IndexHandler() http.HandlerFunc {
+func NewApp(db *sqlx.DB, repo database.UserDB) *App {
+	app := &App{db: db, repoUser: repo, Router: mux.NewRouter()}
+
+	app.initHandlers()
+
+	return app
+}
+
+func (a *App) initHandlers() {
+
+	//a.Router.Get("/user", ha)
+
+	a.Router.HandleFunc("/", IndexHandler()).Methods("GET")
+	a.Router.HandleFunc("/user/create", CreateUserHandler(a.repoUser)).Methods("POST")
+	a.Router.HandleFunc("/users", GetUsersHandler(a.repoUser)).Methods("GET")
+	a.Router.HandleFunc("/user", GetUserByFieldHandler(a.repoUser)).Methods("GET")
+}
+
+func IndexHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Хэллоууууу")
 	}
-}
-
-func New() *App {
-	a := &App{
-		Router: mux.NewRouter(),
-	}
-
-	a.initRoutes()
-	return a
-}
-
-func (a *App) initRoutes() {
-	a.Router.HandleFunc("/", a.IndexHandler()).Methods("GET")
-	a.Router.HandleFunc("/user/create", a.CreateUserHandler()).Methods("POST")
-	a.Router.HandleFunc("/users", a.GetUsersHandler()).Methods("GET")
-	a.Router.HandleFunc("/user", a.GetUserByFieldHandler()).Methods("GET")
 }

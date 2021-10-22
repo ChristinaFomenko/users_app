@@ -8,18 +8,20 @@ import (
 //TODO: уж слишком много берет на себя интерфейс. Будет открываться соединение при получения и создании пользователя. А потом? Создастся, к примеру, таблица "организации", будет еще открываться соединение, или интерфейс UserDB будет еще работать и с организациями?  Вынеси отдельно подключение или вообще просто в main воткни. В main как раз и происходит инициализация всего, а потом в других пакетах происходит обработка.
 
 type UserDB interface {
-	//Open() error
-	//Close() error
 	CreateUser(u *model.User) error
 	GetUsers() ([]*model.User, error)
 	GetUser() ([]*model.User, error)
 }
 
-type DB struct {
+type UserRepository struct {
 	db *sqlx.DB
 }
 
-func (d *DB) CreateUser(u *model.User) error {
+func NewUserRepository(db *sqlx.DB) *UserRepository {
+	return &UserRepository{db: db}
+}
+
+func (d *UserRepository) CreateUser(u *model.User) error {
 	res, err := d.db.Exec(InsertUserSchema, u.FirstName, u.LastName, u.DateOfBirth, u.IncomePerYear)
 	if err != nil {
 		return err
@@ -31,7 +33,7 @@ func (d *DB) CreateUser(u *model.User) error {
 	return err
 }
 
-func (d *DB) GetUsers() ([]*model.User, error) {
+func (d *UserRepository) GetUsers() ([]*model.User, error) {
 	var users []*model.User
 	err := d.db.Select(&users, "SELECT * FROM users")
 	if err != nil {
@@ -41,7 +43,7 @@ func (d *DB) GetUsers() ([]*model.User, error) {
 	return users, nil
 }
 
-func (d *DB) GetUser() ([]*model.User, error) {
+func (d *UserRepository) GetUser() ([]*model.User, error) {
 	var names []*model.User
 	err := d.db.Select(&names, "SELECT first_name, last_name, date_of_birth FROM users LIMIT 2")
 	//err := d.db.Select(&names, "SELECT first_name FROM users LIMIT 2")
@@ -51,7 +53,7 @@ func (d *DB) GetUser() ([]*model.User, error) {
 	return names, err
 }
 
-//func (d *DB) Open() error {
+//func (d *db) Open() error {
 //	pg, err := sqlx.Open("postgres", fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=disable", DbHost, DbPort, DbUsername, DbTable, DbPassword))
 //	if err != nil {
 //		return err
@@ -64,6 +66,6 @@ func (d *DB) GetUser() ([]*model.User, error) {
 //	return nil
 //}
 
-//func (d *DB) Close() error {
+//func (d *db) Close() error {
 //	return d.db.Close()
 //}
