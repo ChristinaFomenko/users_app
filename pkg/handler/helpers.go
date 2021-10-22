@@ -2,9 +2,10 @@ package handler
 
 import (
 	"encoding/json"
-	"github.com/ChristinaFomenko/users_app/pkg/model"
-	"log"
 	"net/http"
+
+	"github.com/ChristinaFomenko/users_app/pkg/model"
+	"github.com/bearatol/lg"
 )
 
 func parse(r *http.Request, data interface{}) error {
@@ -21,7 +22,7 @@ func sendResponse(w http.ResponseWriter, _ *http.Request, data interface{}, stat
 
 	err := json.NewEncoder(w).Encode(data)
 	if err != nil {
-		log.Printf("cant format json, err+%v\n", err)
+		lg.Infof("cant format json, err+%v\n", err)
 	}
 }
 

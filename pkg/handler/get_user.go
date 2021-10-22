@@ -1,17 +1,18 @@
 package handler
 
 import (
+	"net/http"
+
 	"github.com/ChristinaFomenko/users_app/pkg/database"
 	"github.com/ChristinaFomenko/users_app/pkg/model"
-	"log"
-	"net/http"
+	"github.com/bearatol/lg"
 )
 
 func GetUserByFieldHandler(repoUser database.UserDB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		userField, err := repoUser.GetUser()
 		if userField == nil {
-			log.Printf("Can't get user, err=%v \n", err)
+			lg.Fatalf("Can't get user, err=%v \n", err)
 			sendResponse(w, r, nil, http.StatusInternalServerError)
 		}
 		var resp = make([]model.JsonUser, len(userField))
@@ -20,5 +21,6 @@ func GetUserByFieldHandler(repoUser database.UserDB) http.HandlerFunc {
 		}
 
 		sendResponse(w, r, resp, http.StatusOK)
+		lg.Info("Пользователи получены!")
 	}
 }

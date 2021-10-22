@@ -25,7 +25,7 @@ func NewApp(db *sqlx.DB, repo database.UserDB) *App {
 
 func (a *App) initHandlers() {
 
-	//a.Router.Get("/user", ha)
+	//a.Router.Get("/user", handler)
 
 	a.Router.HandleFunc("/", IndexHandler()).Methods("GET")
 	a.Router.HandleFunc("/user/create", CreateUserHandler(a.repoUser)).Methods("POST")

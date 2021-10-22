@@ -1,12 +1,13 @@
 package handler
 
 import (
-	"github.com/ChristinaFomenko/users_app/pkg/database"
-	"github.com/ChristinaFomenko/users_app/pkg/model"
-	"github.com/jmoiron/sqlx"
-	"log"
 	"math"
 	"net/http"
+
+	"github.com/ChristinaFomenko/users_app/pkg/database"
+	"github.com/ChristinaFomenko/users_app/pkg/model"
+	"github.com/bearatol/lg"
+	"github.com/jmoiron/sqlx"
 )
 
 type DB struct {
@@ -34,7 +35,7 @@ func CreateUserHandler(repoUser database.UserDB) http.HandlerFunc {
 		req := model.UserRequest{}
 		err := parse(r, &req)
 		if err != nil {
-			log.Printf("Cannot parse user err=%v \n", err)
+			lg.Infof("Cannot parse user err=%v \n", err)
 			sendResponse(w, r, nil, http.StatusBadRequest)
 			return
 		}
@@ -48,26 +49,24 @@ func CreateUserHandler(repoUser database.UserDB) http.HandlerFunc {
 		}
 
 		if u.FirstName == "" || u.LastName == "" {
-			log.Println("Имя/фамилия - обязательны!")
-			log.Printf("Не могу сохранить пользователя в базу данных")
+			lg.Fatal("Не могу сохранить пользователя в базу данных. Имя/фамилия - обязательны!")
 			sendResponse(w, r, nil, http.StatusInternalServerError)
 			return
 		}
 		if u.DateOfBirth < 1900 || u.DateOfBirth > 2021 {
-			log.Println("Диапазон дат от 1900 до 2021")
-			log.Printf("Не могу сохранить пользователя в базу данных")
+			lg.Fatal("Не могу сохранить пользователя в базу данных. Диапазон дат от 1900 до 2021")
 			sendResponse(w, r, nil, http.StatusInternalServerError)
 			return
 		}
 		if u.IncomePerYear == math.Trunc(u.IncomePerYear) {
-			log.Printf("Не могу сохранить пользователя в базу данных, число должно быть с плавающей точкой")
+			lg.Fatal("Не могу сохранить пользователя в базу данных, число должно быть с плавающей точкой")
 			sendResponse(w, r, nil, http.StatusInternalServerError)
 			return
 		} else {
 			err = repoUser.CreateUser(u)
 			resp := mapUserJSON(u)
 			sendResponse(w, r, resp, http.StatusOK)
-			log.Println("Пользователь успешно сохранен в бд!")
+			lg.Info("Пользователь успешно сохранен в бд!")
 		}
 	}
 }
