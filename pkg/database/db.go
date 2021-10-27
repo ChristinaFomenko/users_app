@@ -7,7 +7,7 @@ import (
 
 type UserDB interface {
 	CreateUser(u *model.User) error
-	GetUsers() ([]*model.User, error)
+	GetAllUsers() ([]*model.User, error)
 	GetUser() ([]*model.User, error)
 }
 
@@ -31,7 +31,7 @@ func (d *UserRepository) CreateUser(u *model.User) error {
 	return err
 }
 
-func (d *UserRepository) GetUsers() ([]*model.User, error) {
+func (d *UserRepository) GetAllUsers() ([]*model.User, error) {
 	var users []*model.User
 	err := d.db.Select(&users, "SELECT * FROM users")
 	if err != nil {

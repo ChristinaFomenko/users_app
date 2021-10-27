@@ -29,7 +29,7 @@ func (a *App) initHandlers() {
 
 	a.Router.HandleFunc("/", IndexHandler()).Methods("GET")
 	a.Router.HandleFunc("/user/create", CreateUserHandler(a.repoUser)).Methods("POST")
-	a.Router.HandleFunc("/users", GetUsersHandler(a.repoUser)).Methods("GET")
+	a.Router.HandleFunc("/get_all_users", GetAllUsersHandler(a.repoUser)).Methods("GET")
 	a.Router.HandleFunc("/user", GetUserByFieldHandler(a.repoUser)).Methods("GET")
 }
 

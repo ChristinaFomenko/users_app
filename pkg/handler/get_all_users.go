@@ -8,9 +8,9 @@ import (
 	"github.com/bearatol/lg"
 )
 
-func GetUsersHandler(repoUser database.UserDB) http.HandlerFunc {
+func GetAllUsersHandler(repoUser database.UserDB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		users, err := repoUser.GetUsers()
+		users, err := repoUser.GetAllUsers()
 		if err != nil {
 			lg.Fatalf("Can't get users, err=%v \n", err)
 			sendResponse(w, r, nil, http.StatusInternalServerError)
