@@ -2,14 +2,23 @@ package main
 
 import (
 	"fmt"
+
 	database "github.com/ChristinaFomenko/users_app/pkg/database"
 	"github.com/ChristinaFomenko/users_app/pkg/handler"
 	"github.com/bearatol/lg"
 
+	"net/http"
+
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
-	"net/http"
 )
+
+// @title Users App API
+// @version 1.0
+// @description API Server for UsersList Application
+
+// @host localhost:8000
+// @BasePath /
 
 func main() {
 
