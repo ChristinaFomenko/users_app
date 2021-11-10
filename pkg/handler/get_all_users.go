@@ -8,6 +8,17 @@ import (
 	"github.com/bearatol/lg"
 )
 
+// @Summary GetUsersHandler
+// @tag.getusers
+// @Accept  json
+// @Produce  json
+// @Param input body "Get Users"
+// @Success 200 {object} model.User
+// @Failure 400,404 {object} sendResponse
+// @Failure 500 {object} sendResponse
+// @Failure default {object} sendResponse
+// @Router /get_all_users [get]
+
 func GetAllUsersHandler(repoUser database.UserDB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		users, err := repoUser.GetAllUsers()

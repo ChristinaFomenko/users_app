@@ -8,6 +8,17 @@ import (
 	"github.com/bearatol/lg"
 )
 
+// @Summary GetUserHandler
+// @tag.getuser
+// @Accept  json
+// @Produce  json
+// @Param input body "Get User"
+// @Success 200 {object} model.User
+// @Failure 400,404 {object} sendResponse
+// @Failure 500 {object} sendResponse
+// @Failure default {object} sendResponse
+// @Router /user [get]
+
 func GetUserByFieldHandler(repoUser database.UserDB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		userField, err := repoUser.GetUser()

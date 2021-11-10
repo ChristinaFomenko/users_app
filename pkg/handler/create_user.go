@@ -30,6 +30,17 @@ type JsonUser struct {
 	IncomePerYear float64 `json:"income_per_year,omitempty"`
 }
 
+// @Summary CreateUserHandler
+// @tag.create
+// @Accept  json
+// @Produce  json
+// @Param input body "Create User"
+// @Success 200 {object} model.UserRequest
+// @Failure 400,404 {object} sendResponse
+// @Failure 500 {object} sendResponse
+// @Failure default {object} sendResponse
+// @Router /user/create [post]
+
 func CreateUserHandler(repoUser database.UserDB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		req := model.UserRequest{}
