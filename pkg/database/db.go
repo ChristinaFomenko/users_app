@@ -53,7 +53,7 @@ func (d *UserRepository) GetUser() ([]*model.User, error) {
 
 func (d *UserRepository) DeleteAllUsers() ([]*model.User, error) {
 	var users []*model.User
-	err, _ := d.db.Exec("DELETE * FROM users")
+	err, _ := d.db.Exec("DELETE FROM users")
 	if err != nil {
 		return users, nil
 	}

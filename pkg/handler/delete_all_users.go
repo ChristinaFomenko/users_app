@@ -3,9 +3,8 @@ package handler
 import (
 	"net/http"
 
-	"github.com/ChristinaFomenko/users_app/pkg/model"
-
 	"github.com/ChristinaFomenko/users_app/pkg/database"
+	"github.com/ChristinaFomenko/users_app/pkg/model"
 	"github.com/bearatol/lg"
 )
 
