@@ -1,6 +1,8 @@
 package database
 
 import (
+	"fmt"
+
 	"github.com/ChristinaFomenko/users_app/pkg/model"
 	"github.com/jmoiron/sqlx"
 )
@@ -53,9 +55,16 @@ func (d *UserRepository) GetUser() ([]*model.User, error) {
 
 func (d *UserRepository) DeleteAllUsers() ([]*model.User, error) {
 	var users []*model.User
-	err, _ := d.db.Exec("DELETE FROM users")
+	res, err := d.db.Exec("DELETE FROM users")
 	if err != nil {
-		return users, nil
+		return nil, err
+	}
+	count, err := res.RowsAffected()
+	if err != nil {
+		return nil, err
+	}
+	if count == 0 {
+		return nil, fmt.Errorf("db is empty")
 	}
 
 	return users, nil
