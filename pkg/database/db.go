@@ -9,6 +9,7 @@ type UserDB interface {
 	CreateUser(u *model.User) error
 	GetAllUsers() ([]*model.User, error)
 	GetUser() ([]*model.User, error)
+	DeleteAllUsers() ([]*model.User, error)
 }
 
 type UserRepository struct {
@@ -48,4 +49,14 @@ func (d *UserRepository) GetUser() ([]*model.User, error) {
 		return nil, err
 	}
 	return names, err
+}
+
+func (d *UserRepository) DeleteAllUsers() ([]*model.User, error) {
+	var users []*model.User
+	err, _ := d.db.Exec("DELETE * FROM users")
+	if err != nil {
+		return users, nil
+	}
+
+	return users, nil
 }
