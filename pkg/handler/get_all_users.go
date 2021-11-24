@@ -8,12 +8,13 @@ import (
 	"github.com/bearatol/lg"
 )
 
-// @Summary GetUsersHandler
-// @tag.getusers
+// @Summary Get All Users
+// @Security ApiKeyAuth
+// @Tags getusers
+// @Description get all users
 // @Accept  json
 // @Produce  json
-// @Param input body "Get Users"
-// @Success 200 {object} model.User
+// @Success 200 {array} database.UserDB "ok"
 // @Failure 400,404 {object} sendResponse
 // @Failure 500 {object} sendResponse
 // @Failure default {object} sendResponse

@@ -30,12 +30,14 @@ type JsonUser struct {
 	IncomePerYear float64 `json:"income_per_year,omitempty"`
 }
 
-// @Summary CreateUserHandler
-// @tag.create
+// @Summary Create User
+// @Security ApiKeyAuth
+// @Tags create
+// @Description create user
 // @Accept  json
 // @Produce  json
-// @Param input body "Create User"
-// @Success 200 {object} model.UserRequest
+// @Param input body user.User "user info"
+// @Success 200 {integer} integer 1
 // @Failure 400,404 {object} sendResponse
 // @Failure 500 {object} sendResponse
 // @Failure default {object} sendResponse

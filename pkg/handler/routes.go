@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
+	httpSwagger "github.com/swaggo/http-swagger"
+
 	"github.com/ChristinaFomenko/users_app/pkg/database"
 	"github.com/gorilla/mux"
 	"github.com/jmoiron/sqlx"
@@ -32,6 +34,14 @@ func (a *App) initHandlers() {
 	a.Router.HandleFunc("/get_all_users", GetAllUsersHandler(a.repoUser)).Methods("GET")
 	a.Router.HandleFunc("/user", GetUserByFieldHandler(a.repoUser)).Methods("GET")
 	a.Router.HandleFunc("/delete_all_users", DeleteAllUsersHandler(a.repoUser)).Methods("DELETE")
+
+	a.Router.PathPrefix("/swagger/").Handler(httpSwagger.Handler(
+		httpSwagger.URL("http://localhost:1323/swagger/doc.json"), //The url pointing to API definition
+		httpSwagger.DeepLinking(true),
+		httpSwagger.DocExpansion("none"),
+		httpSwagger.DomID("#swagger-ui"),
+	))
+
 }
 
 func IndexHandler() http.HandlerFunc {

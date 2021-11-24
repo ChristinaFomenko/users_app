@@ -1,13 +1,12 @@
-package users_app
+package main
 
 import (
 	"fmt"
+	"net/http"
 
-	database "github.com/ChristinaFomenko/users_app/pkg/database"
+	"github.com/ChristinaFomenko/users_app/pkg/database"
 	"github.com/ChristinaFomenko/users_app/pkg/handler"
 	"github.com/bearatol/lg"
-
-	"net/http"
 
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
@@ -19,6 +18,10 @@ import (
 
 // @host localhost:8000
 // @BasePath /
+
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name Authorization
 
 func main() {
 
@@ -38,4 +41,5 @@ func main() {
 
 	lg.Info("App running...", "Server at http://localhost:8000")
 	lg.Fatal(http.ListenAndServe(":8000", app.Router))
+	lg.Fatal(http.ListenAndServe(":1323", app.Router))
 }
