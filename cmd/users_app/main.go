@@ -41,5 +41,4 @@ func main() {
 
 	lg.Info("App running...", "Server at http://localhost:8000")
 	lg.Fatal(http.ListenAndServe(":8000", app.Router))
-	lg.Fatal(http.ListenAndServe(":1323", app.Router))
 }
