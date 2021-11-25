@@ -49,7 +49,7 @@ func CreateUserHandler(repoUser database.UserDB) http.HandlerFunc {
 		err := parse(r, &req)
 		if err != nil {
 			lg.Infof("Cannot parse user err=%v \n", err)
-			sendResponse(w, r, nil, http.StatusBadRequest)
+			sendResponse(w, r, nil, http.StatusBadRequest, "invalid input body")
 			return
 		}
 
@@ -63,22 +63,22 @@ func CreateUserHandler(repoUser database.UserDB) http.HandlerFunc {
 
 		if u.FirstName == "" || u.LastName == "" {
 			lg.Fatal("Не могу сохранить пользователя в базу данных. Имя/фамилия - обязательны!")
-			sendResponse(w, r, nil, http.StatusInternalServerError)
+			sendResponse(w, r, nil, http.StatusInternalServerError, "invalid input body")
 			return
 		}
 		if u.DateOfBirth < 1900 || u.DateOfBirth > 2021 {
 			lg.Fatal("Не могу сохранить пользователя в базу данных. Диапазон дат от 1900 до 2021")
-			sendResponse(w, r, nil, http.StatusInternalServerError)
+			sendResponse(w, r, nil, http.StatusInternalServerError, "invalid input body")
 			return
 		}
 		if u.IncomePerYear == math.Trunc(u.IncomePerYear) {
 			lg.Fatal("Не могу сохранить пользователя в базу данных, число должно быть с плавающей точкой")
-			sendResponse(w, r, nil, http.StatusInternalServerError)
+			sendResponse(w, r, nil, http.StatusInternalServerError, "invalid input body")
 			return
 		} else {
 			err = repoUser.CreateUser(u)
 			resp := mapUserJSON(u)
-			sendResponse(w, r, resp, http.StatusOK)
+			sendResponse(w, r, resp, http.StatusOK, "")
 			lg.Info("Пользователь успешно сохранен в бд!")
 		}
 	}

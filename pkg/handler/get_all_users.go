@@ -25,7 +25,7 @@ func GetAllUsersHandler(repoUser database.UserDB) http.HandlerFunc {
 		users, err := repoUser.GetAllUsers()
 		if err != nil {
 			lg.Fatalf("Can't get users, err=%v \n", err)
-			sendResponse(w, r, nil, http.StatusInternalServerError)
+			sendResponse(w, r, nil, http.StatusInternalServerError, "")
 			return
 		}
 
@@ -34,7 +34,7 @@ func GetAllUsersHandler(repoUser database.UserDB) http.HandlerFunc {
 			resp[i] = mapUserJSON(user)
 		}
 
-		sendResponse(w, r, resp, http.StatusOK)
+		sendResponse(w, r, resp, http.StatusOK, "")
 		lg.Info("Пользователи получены!")
 	}
 }
