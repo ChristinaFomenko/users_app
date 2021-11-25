@@ -7,6 +7,8 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
+//go:generate mockgen -source=db.go -destination=mocks/mock.go
+
 type UserDB interface {
 	CreateUser(u *model.User) error
 	GetAllUsers() ([]*model.User, error)
