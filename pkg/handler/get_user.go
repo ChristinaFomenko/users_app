@@ -30,7 +30,7 @@ func GetUserByFieldHandler(repoUser database.UserDB) http.HandlerFunc {
 		}
 		var resp = make([]model.JsonUser, len(userField))
 		for i, user := range userField {
-			resp[i] = mapUserJSON(user)
+			resp[i] = MakeUserJSON(user)
 		}
 
 		sendResponse(w, r, resp, http.StatusOK, "")

@@ -27,7 +27,7 @@ func sendResponse(w http.ResponseWriter, _ *http.Request, data interface{}, stat
 }
 
 //TODO: это конструктор. "конструкторы в go" погуглить надо. Ты возвращаешь не указатель, значит должно называться MakeUserJSON. Однако, если ты возвращаешь не указатель, то копируешь данные в новый указатель, что не оптимально.
-func mapUserJSON(u *model.User) model.JsonUser {
+func MakeUserJSON(u *model.User) model.JsonUser {
 	return model.JsonUser{
 		ID:            u.ID,
 		FirstName:     u.FirstName,

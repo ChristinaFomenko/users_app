@@ -77,18 +77,9 @@ func CreateUserHandler(repoUser database.UserDB) http.HandlerFunc {
 			return
 		} else {
 			err = repoUser.CreateUser(u)
-			resp := mapUserJSON(u)
+			resp := MakeUserJSON(u)
 			sendResponse(w, r, resp, http.StatusOK, "")
 			lg.Info("Пользователь успешно сохранен в бд!")
 		}
 	}
 }
-
-//func (d *repoUser) CreateUser(u *model.User) error {
-//	res, err := d.repoUser.Exec(u.FirstName, u.LastName, u.DateOfBirth, u.IncomePerYear)
-//	if err != nil {
-//		return err
-//	}
-//	res.LastInsertId() //TODO: функция не void, у нее есть возвращаемые занчения, но они не обрабатываются никак
-//	return err
-//}

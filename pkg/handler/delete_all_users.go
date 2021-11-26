@@ -20,7 +20,7 @@ func DeleteAllUsersHandler(repoUser database.UserDB) http.HandlerFunc {
 
 		var resp = make([]model.JsonUser, len(users))
 		for i, user := range users {
-			resp[i] = mapUserJSON(user)
+			resp[i] = MakeUserJSON(user)
 		}
 
 		sendResponse(w, r, resp, http.StatusOK, "")
