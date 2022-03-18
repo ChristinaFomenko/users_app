@@ -22,3 +22,5 @@ type UserRequest struct {
 	DateOfBirth   int64   `json:"date_of_birth"`
 	IncomePerYear float64 `json:"income_per_year"`
 }
+
+//check
