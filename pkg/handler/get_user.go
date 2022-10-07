@@ -28,9 +28,10 @@ func GetUserByFieldHandler(repoUser database.UserDB) http.HandlerFunc {
 			lg.Fatalf("Can't get user, err=%v \n", err)
 			sendResponse(w, r, nil, http.StatusInternalServerError, "")
 		}
-		var resp = make([]model.JsonUser, len(userField))
+		var resp = make([]model.JSONUser, len(userField))
 		for i, user := range userField {
 			resp[i] = MakeUserJSON(user)
+			return
 		}
 
 		sendResponse(w, r, resp, http.StatusOK, "")

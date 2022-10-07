@@ -30,7 +30,7 @@ func TestCreateUserHandler(t *testing.T) {
 			name:      "OK",
 			inputBody: `{"firstname":"Test","lastname":"Test","dateofbirth":"2000","incomeperyear":"10.99"}`,
 			inputUser: model.User{
-				FirstName:     "Test", //util.RandomString
+				FirstName:     "Test", // util.RandomString
 				LastName:      "Test",
 				DateOfBirth:   2000,
 				IncomePerYear: 11.11,
@@ -47,7 +47,7 @@ func TestCreateUserHandler(t *testing.T) {
 		//	mockBehavior:        func(s *mock_database.MockUserDB, user model.User) {},
 		//	expectedStatusCode:  400,
 		//	expectedRequestBody: `{"error":"invalid input body"}`,
-		//},
+		// },
 		//{
 		//	name:      "Service Failure",
 		//	inputBody: `{"firstname":"Test","lastname":"Test","dateofbirth":"2000","incomeperyear":"10.99"}`,
@@ -62,7 +62,7 @@ func TestCreateUserHandler(t *testing.T) {
 		//	},
 		//	expectedStatusCode:  500,
 		//	expectedRequestBody: `{"message":"service failure"}`,
-		//},
+		// },
 	}
 
 	for _, testCase := range testTable {

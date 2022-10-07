@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/ChristinaFomenko/users_app/pkg/database"
 	"github.com/ChristinaFomenko/users_app/pkg/handler"
@@ -24,9 +25,9 @@ import (
 // @name Authorization
 
 func main() {
-
 	lg.Trace("Connected to database!")
-	db, err := sqlx.Open("postgres", fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=disable", database.DbHost, database.DbPort, database.DbUsername, database.DbTable, database.DbPassword))
+	db, err := sqlx.Open("postgres", fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s "+
+		"sslmode=disable", database.DBHost, database.DBPort, database.DBUsername, database.DBTable, database.DBPassword))
 	if err != nil {
 		lg.Fatal(err)
 	}
@@ -39,6 +40,16 @@ func main() {
 
 	http.HandleFunc("/", app.Router.ServeHTTP)
 
+	server := &http.Server{
+		Addr:              ":8000",
+		ReadHeaderTimeout: 3 * time.Second,
+		Handler:           app.Router,
+	}
+
+	err = server.ListenAndServe()
+	if err != nil {
+		lg.Fatalf("Listen and serve failed", err)
+	}
+
 	lg.Info("App running...", "Server at http://localhost:8000")
-	lg.Fatal(http.ListenAndServe(":8000", app.Router))
 }

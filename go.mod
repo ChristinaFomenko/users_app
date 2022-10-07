@@ -12,6 +12,7 @@ require (
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/stretchr/testify v1.7.0
 	github.com/swaggo/swag v1.7.4
+	github.com/tekwizely/pre-commit-golang v0.8.3 // indirect
 	golang.org/x/net v0.0.0-20211123203042-d83791d6bcd9 // indirect
 	golang.org/x/sys v0.0.0-20211123173158-ef496fb156ab // indirect
 	golang.org/x/tools v0.1.7 // indirect

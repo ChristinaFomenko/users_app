@@ -8,7 +8,7 @@ type User struct {
 	IncomePerYear float64 `db:"income_per_year"`
 }
 
-type JsonUser struct {
+type JSONUser struct {
 	ID            int64   `json:"id,omitempty"`
 	FirstName     string  `json:"first_name,omitempty"`
 	LastName      string  `json:"last_name,omitempty"`
@@ -22,5 +22,3 @@ type UserRequest struct {
 	DateOfBirth   int64   `json:"date_of_birth"`
 	IncomePerYear float64 `json:"income_per_year"`
 }
-
-//check

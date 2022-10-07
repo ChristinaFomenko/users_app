@@ -24,15 +24,11 @@ func NewApp(db *sqlx.DB, repo database.UserDB) *App {
 }
 
 func (a *App) initHandlers() {
-
-	//a.Router.Get("/user", handler)
-
 	a.Router.HandleFunc("/", IndexHandler()).Methods("GET")
 	a.Router.HandleFunc("/user/create", CreateUserHandler(a.repoUser)).Methods("POST")
 	a.Router.HandleFunc("/get_all_users", GetAllUsersHandler(a.repoUser)).Methods("GET")
 	a.Router.HandleFunc("/user", GetUserByFieldHandler(a.repoUser)).Methods("GET")
 	a.Router.HandleFunc("/delete_all_users", DeleteAllUsersHandler(a.repoUser)).Methods("DELETE")
-
 }
 
 func IndexHandler() http.HandlerFunc {

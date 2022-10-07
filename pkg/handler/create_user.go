@@ -11,7 +11,7 @@ import (
 )
 
 type DB struct {
-	db *sqlx.DB
+	*sqlx.DB
 }
 
 type User struct {
@@ -22,7 +22,7 @@ type User struct {
 	IncomePerYear float64 `repoUser:"income_per_year"`
 }
 
-type JsonUser struct {
+type JSONUser struct {
 	ID            int64   `json:"id,omitempty"`
 	FirstName     string  `json:"first_name,omitempty"`
 	LastName      string  `json:"last_name,omitempty"`
@@ -69,14 +69,12 @@ func CreateUserHandler(repoUser database.UserDB) http.HandlerFunc {
 		if u.DateOfBirth < 1900 || u.DateOfBirth > 2021 {
 			lg.Fatal("Не могу сохранить пользователя в базу данных. Диапазон дат от 1900 до 2021")
 			sendResponse(w, r, nil, http.StatusInternalServerError, "invalid input body")
-			return
 		}
 		if u.IncomePerYear == math.Trunc(u.IncomePerYear) {
 			lg.Fatal("Не могу сохранить пользователя в базу данных, число должно быть с плавающей точкой")
 			sendResponse(w, r, nil, http.StatusInternalServerError, "invalid input body")
-			return
 		} else {
-			err = repoUser.CreateUser(u)
+			var _ = repoUser.CreateUser(u)
 			resp := MakeUserJSON(u)
 			sendResponse(w, r, resp, http.StatusOK, "")
 			lg.Info("Пользователь успешно сохранен в бд!")

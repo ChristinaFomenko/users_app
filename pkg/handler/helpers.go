@@ -12,7 +12,12 @@ func parse(r *http.Request, data interface{}) error {
 	return json.NewDecoder(r.Body).Decode(data)
 }
 
-func sendResponse(w http.ResponseWriter, _ *http.Request, data interface{}, status int, s string) {
+func sendResponse(
+	w http.ResponseWriter,
+	_ *http.Request,
+	data interface{},
+	status int,
+	s string) { //nolint:unparam // using in another file
 	w.Header().Add("Content-Type", "application/json")
 	w.WriteHeader(status)
 
@@ -26,8 +31,8 @@ func sendResponse(w http.ResponseWriter, _ *http.Request, data interface{}, stat
 	}
 }
 
-func MakeUserJSON(u *model.User) model.JsonUser {
-	return model.JsonUser{
+func MakeUserJSON(u *model.User) model.JSONUser {
+	return model.JSONUser{
 		ID:            u.ID,
 		FirstName:     u.FirstName,
 		LastName:      u.LastName,

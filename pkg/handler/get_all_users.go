@@ -29,7 +29,7 @@ func GetAllUsersHandler(repoUser database.UserDB) http.HandlerFunc {
 			return
 		}
 
-		var resp = make([]model.JsonUser, len(users))
+		var resp = make([]model.JSONUser, len(users))
 		for i, user := range users {
 			resp[i] = MakeUserJSON(user)
 		}
